@@ -47,4 +47,10 @@ public class TransactionController {
 		businessService.delete(uuid);
 	}
 
+	@GetMapping("/test")
+	EndpointResponse<Void> test(){
+		transactionService.testJasper();
+		return new EndpointResponse<>(null, null);
+	}
+
 }
