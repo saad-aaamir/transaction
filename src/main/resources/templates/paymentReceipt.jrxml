@@ -181,7 +181,7 @@
                 <textElement>
                     <font size="8"/>
                 </textElement>
-                <textFieldExpression><![CDATA["This is an automated email, please do not reply, For any other query, please email us at" + $F{contactEmail}]]></textFieldExpression>
+                <textFieldExpression><![CDATA["This is an automated email, please do not reply, For any other query, please email us at " + $F{contactEmail}]]></textFieldExpression>
             </textField>
             <textField>
                 <reportElement x="394" y="287" width="144" height="182" uuid="19c42558-467b-4563-b1b0-64af142475f0"/>
