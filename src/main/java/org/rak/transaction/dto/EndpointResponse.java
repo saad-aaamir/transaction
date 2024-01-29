@@ -1,4 +1,4 @@
-package org.rak.microservicesassessment.dto;
+package org.rak.transaction.dto;
 
 import org.springframework.http.ProblemDetail;
 

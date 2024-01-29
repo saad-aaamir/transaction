@@ -1,4 +1,4 @@
-package org.rak.microservicesassessment.annotation;
+package org.rak.transaction.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

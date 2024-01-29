@@ -1,4 +1,4 @@
-package org.rak.microservicesassessment.exception;
+package org.rak.transaction.exception;
 
 import org.springframework.beans.PropertyAccessException;
 import org.springframework.http.HttpStatus;
@@ -6,11 +6,7 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-/**
- * @author Usman
- * @created 1/20/2024 - 9:17 PM
- * @project demo-rak
- */
+
 @ControllerAdvice
 public class CentralizedExceptionHandler {
 	@ExceptionHandler({ ApplicationException.class })

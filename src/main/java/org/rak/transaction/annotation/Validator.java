@@ -1,4 +1,4 @@
-package org.rak.microservicesassessment.annotation;
+package org.rak.transaction.annotation;
 
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;
