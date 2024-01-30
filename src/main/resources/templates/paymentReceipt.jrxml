@@ -82,12 +82,10 @@
             </textField>
             <image>
                 <reportElement x="10" y="22" width="83" height="40" uuid="5341373b-cbc4-4527-aabf-2c4ca910652f"/>
-                <imageExpression><![CDATA["/Users/hamza/Desktop/Screenshot 2024-01-27 at 11.21.14 PM.png"]]></imageExpression>
-            </image>
+                <imageExpression><![CDATA[this.getClass().getResourceAsStream("/templates/logo1.png")]]></imageExpression>            </image>
             <image>
                 <reportElement x="31" y="281" width="179" height="179" uuid="f0ab803c-6480-4a9e-8637-229b7b441a5b"/>
-                <imageExpression><![CDATA["/Users/hamza/Desktop/Screenshot 2024-01-27 at 11.25.53 PM.png"]]></imageExpression>
-            </image>
+                <imageExpression><![CDATA[this.getClass().getResourceAsStream("/templates/logo2.png")]]></imageExpression>            </image>
             <staticText>
                 <reportElement x="233" y="257" width="123" height="30" forecolor="#412FA8" uuid="cb2f77f7-f6e0-4288-8e66-cb85cfd62383"/>
                 <textElement>

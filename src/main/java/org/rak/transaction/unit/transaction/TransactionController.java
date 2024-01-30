@@ -48,9 +48,8 @@ public class TransactionController {
 	}
 
 	@GetMapping("/test")
-	EndpointResponse<Void> test(){
-		transactionService.testJasper();
-		return new EndpointResponse<>(null, null);
+	EndpointResponse<String> test(){
+		return new EndpointResponse<>(transactionService.testJasper(), null);
 	}
 
 }

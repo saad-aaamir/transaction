@@ -19,6 +19,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -67,13 +69,13 @@ public class TransactionService implements BusinessService<TransactionDto> {
         return repository.findAllByStudentId(studentId).stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
-    public void testJasper() {
+    public String testJasper() {
         PaymentReceiptJasperDTO paymentReceiptJasperDTO = PaymentReceiptJasperDTO.builder()
                 .studentName("hamza")
                 .studentGrade("10")
                 .guardianName("shahrukh")
                 .feeType("Tution")
-                .amount("10")
+                .amount("10.00")
                 .contactEmail("contact@skiply.com")
                 .studentId("12345")
                 .cardType("MasterCard")
@@ -81,7 +83,7 @@ public class TransactionService implements BusinessService<TransactionDto> {
                 .txnRefNo("81720380")
                 .txnDate("20-01-2024, 8:28 PM")
                 .build();
-        generatePDFPaymentReceipt(paymentReceiptJasperDTO, "test", "/templates/paymentReceipt.jrxml");
+        return generatePDFPaymentReceipt(paymentReceiptJasperDTO, "test", "/templates/paymentReceipt.jrxml");
     }
 
     String generatePDFPaymentReceipt(PaymentReceiptJasperDTO paymentReceiptJasperDTO, String fileName, String template) {
@@ -94,8 +96,8 @@ public class TransactionService implements BusinessService<TransactionDto> {
 
             File pdf = File.createTempFile(fileName, ".pdf");
             JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(pdf));
-
-            return "";
+            Path path = Paths.get(pdf.toURI());
+            return path.toUri().toURL().toString();
 
         } catch (IOException | JRException e) {
             throw new ApplicationException("", e.getMessage());
