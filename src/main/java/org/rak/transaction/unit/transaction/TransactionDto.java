@@ -50,4 +50,7 @@ public class TransactionDto {
 
     @JsonProperty("grade")
     private String grade;
+
+    @JsonProperty("transDateTime")
+    private String transDateTime;
 }

@@ -3,14 +3,7 @@ package org.rak.transaction.unit.transaction;
 import jakarta.validation.Valid;
 import org.rak.transaction.dto.EndpointResponse;
 import org.rak.transaction.interfaces.BusinessService;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -48,8 +41,8 @@ public class TransactionController {
 	}
 
 	@GetMapping("/test")
-	EndpointResponse<String> test(){
-		return new EndpointResponse<>(transactionService.testJasper(), null);
+	EndpointResponse<String> test(@RequestParam String transNumber){
+		return new EndpointResponse<>(transactionService.testJasper(transNumber), null);
 	}
 
 }

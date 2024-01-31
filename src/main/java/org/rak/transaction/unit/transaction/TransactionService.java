@@ -1,12 +1,6 @@
 package org.rak.transaction.unit.transaction;
 
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.rak.transaction.TransactionApplication;
 import org.rak.transaction.exception.ApplicationException;
@@ -24,7 +18,9 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
+import static org.rak.transaction.Constats.Constants.CONTACT_EMAIL;
+import static org.rak.transaction.Constats.Constants.FEE_TYPE_TUITION;
 
 @Service
 public class TransactionService implements BusinessService<TransactionDto> {
@@ -66,25 +62,38 @@ public class TransactionService implements BusinessService<TransactionDto> {
     }
 
     public List<TransactionDto> getAllByStudentId(String studentId) {
-        return repository.findAllByStudentId(studentId).stream().map(mapper::toDto).collect(Collectors.toList());
+        return repository.findAllByStudentId(studentId).stream().map(mapper::toDto).toList();
     }
 
-    public String testJasper() {
-        PaymentReceiptJasperDTO paymentReceiptJasperDTO = PaymentReceiptJasperDTO.builder()
-                .studentName("hamza")
-                .studentGrade("10")
-                .guardianName("shahrukh")
-                .feeType("Tution")
-                .amount("10.00")
-                .contactEmail("contact@skiply.com")
-                .studentId("12345")
-                .cardType("MasterCard")
-                .cardNumber("893712083012")
-                .txnRefNo("81720380")
-                .txnDate("20-01-2024, 8:28 PM")
-                .build();
-        return generatePDFPaymentReceipt(paymentReceiptJasperDTO, "test", "/templates/paymentReceipt.jrxml");
+    private TransactionDto getByTransID(String transRefNum) {
+        Optional<Transaction> transaction = repository.findFirstByTransRefNum(transRefNum);
+        return transaction.map(mapper::toDto).orElse(null);
     }
+
+    public String testJasper(String transNumber) {
+        TransactionDto transactionDto = getByTransID(transNumber);
+
+        if (transactionDto != null) {
+            PaymentReceiptJasperDTO paymentReceiptJasperDTO = PaymentReceiptJasperDTO.builder()
+                    .studentName(transactionDto.getStudentName())
+                    .studentGrade(transactionDto.getGrade())
+                    .guardianName(transactionDto.getGuardianName())
+                    .feeType(FEE_TYPE_TUITION)
+                    .amount(transactionDto.getAmount())
+                    .contactEmail(CONTACT_EMAIL)
+                    .studentId(transactionDto.getStudentId())
+                    .cardType(transactionDto.getCardType())
+                    .cardNumber(transactionDto.getCardNumber())
+                    .txnRefNo(transactionDto.getTransRefNum())
+                    .txnDate(transactionDto.getTransDateTime())
+                    .build();
+
+            return generatePDFPaymentReceipt(paymentReceiptJasperDTO, "test", "/templates/paymentReceipt.jrxml");
+        } else {
+            return "Transaction not found";
+        }
+    }
+
 
     String generatePDFPaymentReceipt(PaymentReceiptJasperDTO paymentReceiptJasperDTO, String fileName, String template) {
         JRDataSource dataSource = new JRBeanCollectionDataSource(Collections.singletonList(paymentReceiptJasperDTO));

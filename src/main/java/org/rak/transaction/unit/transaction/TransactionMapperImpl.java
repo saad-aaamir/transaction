@@ -3,7 +3,11 @@ package org.rak.transaction.unit.transaction;
 import org.rak.transaction.interfaces.Mapper;
 import org.rak.transaction.util.Utility;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
+
+import static org.rak.transaction.util.Utility.removeSpaces;
 
 @org.rak.transaction.annotation.Mapper
 public class TransactionMapperImpl implements Mapper<TransactionDto, Transaction> {
@@ -21,6 +25,7 @@ public class TransactionMapperImpl implements Mapper<TransactionDto, Transaction
                 .cardType(entity.getCardType())
                 .transRefNum(entity.getTransRefNum())
                 .grade(entity.getGrade())
+                .transDateTime(entity.getTransDateTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
                 .build();
 
     }
@@ -36,11 +41,11 @@ public class TransactionMapperImpl implements Mapper<TransactionDto, Transaction
                 .amount(dto.getAmount())
                 .schoolLogoUrl(dto.getSchoolLogoUrl())
                 .cardNumber(dto.getCardNumber())
-                .cardType(Utility.detectCreditCardType(dto.getCardNumber()))
+                .cardType(Utility.detectCreditCardType(removeSpaces(dto.getCardNumber())))
                 .transRefNum("TRX-".concat(UUID.randomUUID().toString()).substring(0,7))
                 .grade(dto.getGrade())
+                .transDateTime(LocalDateTime.now())
                 .build();
-
 
     }
 }

@@ -37,4 +37,8 @@ public class Utility {
             return "Unknown";
         }
     }
+
+    public static String removeSpaces(String cardNumber) {
+        return cardNumber.replaceAll("\\s", "");
+    }
 }
