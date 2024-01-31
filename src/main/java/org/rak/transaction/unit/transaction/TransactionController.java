@@ -21,23 +21,13 @@ public class TransactionController {
 
 
 	@GetMapping("/student/{studentId}")
-	EndpointResponse<List<TransactionDto>> getAllByStudentId(@PathVariable String studentId){
+	public EndpointResponse<List<TransactionDto>> getAllByStudentId(@PathVariable String studentId){
 		return new EndpointResponse<>(transactionService.getAllByStudentId(studentId),null);
 	}
 
 	@PostMapping
-	EndpointResponse<TransactionDto> processPayment(@Valid @RequestBody TransactionDto transactionDto){
+	public EndpointResponse<TransactionDto> processPayment(@Valid @RequestBody TransactionDto transactionDto){
 		return new EndpointResponse<>(businessService.create(transactionDto), null);
-	}
-
-	@PutMapping
-	EndpointResponse<TransactionDto> updateStudent(@RequestBody TransactionDto transactionDto, @PathVariable String uuid){
-		return new EndpointResponse<>(businessService.update(transactionDto, uuid), null);
-	}
-
-	@DeleteMapping
-	void updateStudent(@PathVariable String uuid){
-		businessService.delete(uuid);
 	}
 
 	@GetMapping("/test")
